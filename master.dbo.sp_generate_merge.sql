@@ -397,7 +397,7 @@ END
  END
 
  --Making sure to output SET IDENTITY_INSERT ON/OFF in case the table has an IDENTITY column
- IF (SELECT COLUMNPROPERTY( OBJECT_ID(@Source_Table_Qualified),SUBSTRING(@Column_Name,2,LEN(@Column_Name) - 2),'IsIdentity')) = 1 
+ IF (SELECT COLUMNPROPERTY( OBJECT_ID(@Target_Table_For_Output),SUBSTRING(@Column_Name,2,LEN(@Column_Name) - 2),'IsIdentity')) = 1 
  BEGIN
  IF @ommit_identity = 0 --Determing whether to include or exclude the IDENTITY column
  SET @IDN = @Column_Name
