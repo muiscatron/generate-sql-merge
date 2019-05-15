@@ -399,10 +399,9 @@ END
  --Making sure to output SET IDENTITY_INSERT ON/OFF in case the table has an IDENTITY column
  IF (SELECT COLUMNPROPERTY( OBJECT_ID(@Target_Table_For_Output),SUBSTRING(@Column_Name,2,LEN(@Column_Name) - 2),'IsIdentity')) = 1 
  BEGIN
- IF @ommit_identity = 0 --Determing whether to include or exclude the IDENTITY column
  SET @IDN = @Column_Name
- ELSE
- GOTO SKIP_LOOP 
+ IF @ommit_identity = 1 --Determing whether to include or exclude the IDENTITY column
+  GOTO SKIP_LOOP 
  END
  
  --Making sure whether to output computed columns or not
