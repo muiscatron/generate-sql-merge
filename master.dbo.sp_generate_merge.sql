@@ -401,7 +401,7 @@ END
  BEGIN
  SET @IDN = @Column_Name
  IF @ommit_identity = 1 --Determing whether to include or exclude the IDENTITY column
-  GOTO SKIP_LOOP 
+ GOTO SKIP_LOOP 
  END
  
  --Making sure whether to output computed columns or not
@@ -506,7 +506,7 @@ END
  AND c.TABLE_SCHEMA = pk.TABLE_SCHEMA
  AND c.CONSTRAINT_NAME = pk.CONSTRAINT_NAME
  AND c.COLUMN_NAME = @Column_Name_Unquoted 
- )
+ ) AND (@Column_Name <> @IDN)
  BEGIN
   SET @Column_List_For_Update = @Column_List_For_Update + '[Target].' + @Column_Name + ' = [Source].' + @Column_Name + ', ' + @b + '  '
  SET @Column_List_For_Check = @Column_List_For_Check +
