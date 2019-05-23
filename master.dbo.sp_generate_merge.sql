@@ -1,21 +1,4 @@
-SET NOCOUNT ON
-GO
-
-PRINT 'Using Master database'
-USE master
-GO
-
-PRINT 'Checking for the existence of this procedure'
-IF (SELECT OBJECT_ID('sp_generate_merge','P')) IS NOT NULL --means, the procedure already exists
- BEGIN
- PRINT 'Procedure already exists. So, dropping it'
- DROP PROC sp_generate_merge
- END
-GO
-
---Turn system object marking on
-
-CREATE PROC [sp_generate_merge]
+CREATE PROC [dbo].[sp_generate_merge]
 (
  @table_name nvarchar(776), -- The table/view for which the MERGE statement will be generated using the existing data. This parameter accepts unquoted single-part identifiers only (e.g. MyTable)
  @target_table nvarchar(776) = NULL, -- Use this parameter to specify a different table name into which the data will be inserted/updated/deleted. This parameter accepts unquoted single-part identifiers (e.g. MyTable) or quoted multi-part identifiers (e.g. [OtherDb].[dbo].[MyTable])
@@ -804,20 +787,4 @@ SET NOCOUNT OFF
 RETURN 0 --Success. We are done!
 END
 
-GO
 
-PRINT 'Created the procedure'
-GO
-
-
---Mark the proc as a system object to allow it to be called transparently from other databases
-EXEC sp_MS_marksystemobject sp_generate_merge
-GO
-
-PRINT 'Granting EXECUTE permission on sp_generate_merge to all users'
-GRANT EXEC ON sp_generate_merge TO public
-
-SET NOCOUNT OFF
-GO
-
-PRINT 'Done'
